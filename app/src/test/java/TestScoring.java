@@ -1,3 +1,5 @@
+import lucky.LuckyThirdteen;
+import lucky.PropertiesLoader;
 import org.junit.Test;
 
 import java.util.Properties;
