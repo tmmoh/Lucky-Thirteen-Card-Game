@@ -17,11 +17,6 @@ public class LuckyThirdteen extends CardGame {
     public static final Random RANDOM = new Random(SEED);
     private final Properties properties;
     private final StringBuilder logResult = new StringBuilder();
-    private final List<List<String>> playerAutoMovements = new ArrayList<>();
-
-    public boolean rankGreater(Card card1, Card card2) {
-        return card1.getRankId() < card2.getRankId(); // Warning: Reverse rank order of cards (see comment on enum)
-    }
 
     private final String version = "1.0";
     public static final int NB_PLAYERS = 4;
@@ -57,8 +52,6 @@ public class LuckyThirdteen extends CardGame {
 
     private int[] scores = new int[NB_PLAYERS];
 
-    private int[] autoIndexHands = new int [NB_PLAYERS];
-    private boolean isAuto = false;
     private lucky.Hand playingArea;
     public lucky.Hand pack;
 
@@ -378,7 +371,6 @@ public class LuckyThirdteen extends CardGame {
     public LuckyThirdteen(Properties properties) {
         super(700, 700, 30);
         this.properties = properties;
-        isAuto = Boolean.parseBoolean(properties.getProperty("isAuto"));
         thinkingTime = Integer.parseInt(properties.getProperty("thinkingTime", "200"));
         delayTime = Integer.parseInt(properties.getProperty("delayTime", "50"));
     }

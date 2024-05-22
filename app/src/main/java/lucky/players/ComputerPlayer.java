@@ -1,13 +1,11 @@
 package lucky.players;
 
-import ch.aplu.jcardgame.Card;
 import ch.aplu.jgamegrid.GameGrid;
 import lucky.LuckyThirdteen;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 
 
 public abstract class ComputerPlayer extends Player {
@@ -30,10 +28,7 @@ public abstract class ComputerPlayer extends Player {
             autoPlayRound();
         } else {
             // Logic move
-            drawRandomCard();
-            game.setStatusText("Player " + this + " thinking...");
-            GameGrid.delay(game.thinkingTime);
-            discardCard();
+            logicPlayRound();
         }
     }
 
@@ -56,6 +51,11 @@ public abstract class ComputerPlayer extends Player {
         }
     }
 
-    protected abstract void logicPlayRound();
+    protected void logicPlayRound() {
+        drawRandomCard();
+        game.setStatusText("Player " + this + " thinking...");
+        GameGrid.delay(game.thinkingTime);
+        discardCard();
+    }
 
 }

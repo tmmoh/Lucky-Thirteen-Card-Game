@@ -1,6 +1,5 @@
 package lucky.players;
 
-import ch.aplu.jcardgame.Card;
 import lucky.LuckyThirdteen;
 
 public class RandomPlayer extends ComputerPlayer {
@@ -9,12 +8,7 @@ public class RandomPlayer extends ComputerPlayer {
     }
 
     @Override
-    protected void logicPlayRound() {
-
-    }
-
-    @Override
     protected void discardCard() {
-
+        hand.discardRandomCard();
     }
 }
