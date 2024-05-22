@@ -12,26 +12,24 @@ public enum Rank {
     FOUR (4, 4, 4), THREE (3, 3, 3),
     TWO (2, 2, 2);
 
-    private int rankCardValue = 1;
-    private int scoreValue = 0;
+    private int value = 0;
     private int []possibleSumValues = null;
-    Rank(int rankCardValue, int scoreValue, int... possibleSumValues) {
-        this.rankCardValue = rankCardValue;
-        this.scoreValue = scoreValue;
+    Rank(int value, int... possibleSumValues) {
+        this.value = value;
         this.possibleSumValues = possibleSumValues;
     }
 
     public int getRankCardValue() {
-        return rankCardValue;
+        return value;
     }
 
-    public int getScoreCardValue() { return scoreValue; }
+    public int getScoreCardValue() { return value; }
 
     public int[] getPossibleSumValues() {
         return possibleSumValues;
     }
 
     public String getRankCardLog() {
-        return String.format("%d", rankCardValue);
+        return String.format("%d", value);
     }
 }

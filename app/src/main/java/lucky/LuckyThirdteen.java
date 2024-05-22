@@ -9,27 +9,23 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("serial")
 public class LuckyThirdteen extends CardGame {
-
-
-
-    final String trumpImage[] = {"bigspade.gif", "bigheart.gif", "bigdiamond.gif", "bigclub.gif"};
 
     static public final int seed = 30008;
     static final Random random = new Random(seed);
-    private Properties properties;
-    private StringBuilder logResult = new StringBuilder();
-    private List<List<String>> playerAutoMovements = new ArrayList<>();
+    private final Properties properties;
+    private final StringBuilder logResult = new StringBuilder();
+    private final List<List<String>> playerAutoMovements = new ArrayList<>();
 
     public boolean rankGreater(Card card1, Card card2) {
         return card1.getRankId() < card2.getRankId(); // Warning: Reverse rank order of cards (see comment on enum)
     }
 
     private final String version = "1.0";
-    public final int nbPlayers = 4;
-    public final int nbStartCards = 2;
-    public final int nbFaceUpCards = 2;
+    public static final int NB_PLAYERS = 4;
+    public static final int NB_START_CARDS = 2;
+    public static final int NB_FACE_UP_CARDS = 2;
+    
     private final int handWidth = 400;
     private final int trickWidth = 40;
     private static final int THIRTEEN_GOAL = 13;
@@ -57,9 +53,9 @@ public class LuckyThirdteen extends CardGame {
         setStatusText(string);
     }
 
-    private int[] scores = new int[nbPlayers];
+    private int[] scores = new int[NB_PLAYERS];
 
-    private int[] autoIndexHands = new int [nbPlayers];
+    private int[] autoIndexHands = new int [NB_PLAYERS];
     private boolean isAuto = false;
     private Hand playingArea;
     private Hand pack;
@@ -67,7 +63,7 @@ public class LuckyThirdteen extends CardGame {
     Font bigFont = new Font("Arial", Font.BOLD, 36);
 
     private void initScore() {
-        for (int i = 0; i < nbPlayers; i++) {
+        for (int i = 0; i < NB_PLAYERS; i++) {
             // scores[i] = 0;
             String text = "[" + String.valueOf(scores[i]) + "]";
             scoreActors[i] = new TextActor(text, Color.WHITE, bgColor, bigFont);
@@ -178,16 +174,16 @@ public class LuckyThirdteen extends CardGame {
     private Card selected;
 
     private void initGame() {
-        hands = new Hand[nbPlayers];
-        for (int i = 0; i < nbPlayers; i++) {
+        hands = new Hand[NB_PLAYERS];
+        for (int i = 0; i < NB_PLAYERS; i++) {
             hands[i] = new Hand(deck);
         }
         playingArea = new Hand(deck);
-        dealingOut(hands, nbPlayers, nbStartCards, nbFaceUpCards);
+        dealingOut(hands, NB_PLAYERS, NB_START_CARDS, NB_FACE_UP_CARDS);
         playingArea.setView(this, new RowLayout(trickLocation, (playingArea.getNumberOfCards() + 2) * trickWidth));
         playingArea.draw();
 
-        for (int i = 0; i < nbPlayers; i++) {
+        for (int i = 0; i < NB_PLAYERS; i++) {
             hands[i].sort(Hand.SortType.SUITPRIORITY, false);
         }
         // Set up human player for interaction
@@ -200,8 +196,8 @@ public class LuckyThirdteen extends CardGame {
         };
         hands[0].addCardListener(cardListener);
         // graphics
-        RowLayout[] layouts = new RowLayout[nbPlayers];
-        for (int i = 0; i < nbPlayers; i++) {
+        RowLayout[] layouts = new RowLayout[NB_PLAYERS];
+        for (int i = 0; i < NB_PLAYERS; i++) {
             layouts[i] = new RowLayout(handLocations[i], handWidth);
             layouts[i].setRotationAngle(90 * i);
             // layouts[i].setStepDelay(10);
@@ -332,7 +328,7 @@ public class LuckyThirdteen extends CardGame {
     }
 
 
-    private void dealingOut(Hand[] hands, int nbPlayers, int nbCardsPerPlayer, int nbSharedCards) {
+    private void dealingOut(Hand[] hands, int NB_PLAYERS, int nbCardsPerPlayer, int nbSharedCards) {
         pack = deck.toHand(false);
 
         String initialShareKey = "shared.initialcards";
@@ -359,7 +355,7 @@ public class LuckyThirdteen extends CardGame {
             playingArea.insert(dealt, true);
         }
 
-        for (int i = 0; i < nbPlayers; i++) {
+        for (int i = 0; i < NB_PLAYERS; i++) {
             String initialCardsKey = "players." + i + ".initialcards";
             String initialCardsValue = properties.getProperty(initialCardsKey);
             if (initialCardsValue == null) {
@@ -378,7 +374,7 @@ public class LuckyThirdteen extends CardGame {
             }
         }
 
-        for (int i = 0; i < nbPlayers; i++) {
+        for (int i = 0; i < NB_PLAYERS; i++) {
             int cardsToDealt = nbCardsPerPlayer - hands[i].getNumberOfCards();
             for (int j = 0; j < cardsToDealt; j++) {
                 if (pack.isEmpty()) return;
@@ -438,7 +434,7 @@ public class LuckyThirdteen extends CardGame {
         // End trump suit
         int winner = 0;
         int roundNumber = 1;
-        for (int i = 0; i < nbPlayers; i++) updateScore(i);
+        for (int i = 0; i < NB_PLAYERS; i++) updateScore(i);
 
         List<Card>cardsPlayed = new ArrayList<>();
         addRoundInfoToLog(roundNumber);
@@ -498,7 +494,7 @@ public class LuckyThirdteen extends CardGame {
                 // End Follow
             }
 
-            nextPlayer = (nextPlayer + 1) % nbPlayers;
+            nextPlayer = (nextPlayer + 1) % NB_PLAYERS;
 
             if (nextPlayer == 0) {
                 roundNumber ++;
@@ -559,11 +555,11 @@ public class LuckyThirdteen extends CardGame {
         initGame();
         playGame();
 
-        for (int i = 0; i < nbPlayers; i++) updateScore(i);
+        for (int i = 0; i < NB_PLAYERS; i++) updateScore(i);
         int maxScore = 0;
-        for (int i = 0; i < nbPlayers; i++) if (scores[i] > maxScore) maxScore = scores[i];
+        for (int i = 0; i < NB_PLAYERS; i++) if (scores[i] > maxScore) maxScore = scores[i];
         List<Integer> winners = new ArrayList<Integer>();
-        for (int i = 0; i < nbPlayers; i++) if (scores[i] == maxScore) winners.add(i);
+        for (int i = 0; i < NB_PLAYERS; i++) if (scores[i] == maxScore) winners.add(i);
         String winText;
         if (winners.size() == 1) {
             winText = "Game over. Winner is player: " +
