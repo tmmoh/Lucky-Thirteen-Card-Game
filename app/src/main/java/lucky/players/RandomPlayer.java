@@ -9,6 +9,6 @@ public class RandomPlayer extends ComputerPlayer {
 
     @Override
     protected void discardCard() {
-        hand.discardRandomCard();
+        hand.discardRandomCard(game.discard);
     }
 }

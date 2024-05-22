@@ -21,5 +21,6 @@ public class BasicPlayer extends ComputerPlayer {
         }
 
         minCard.removeFromHand(true);
+        game.discard.insert(minCard, true);
     }
 }

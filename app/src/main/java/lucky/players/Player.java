@@ -43,7 +43,7 @@ public abstract class Player {
     }
 
     protected void discardCard(String cardString) {
-        hand.discardCard(cardString);
+        hand.discardCard(game.discard, cardString);
     }
 
     protected abstract void discardCard();

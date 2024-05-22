@@ -52,8 +52,9 @@ public class LuckyThirdteen extends CardGame {
 
     private int[] scores = new int[NB_PLAYERS];
 
-    private lucky.Hand playingArea;
+    public lucky.Hand playingArea;
     public lucky.Hand pack;
+    public lucky.Hand discard;
 
     Font bigFont = new Font("Arial", Font.BOLD, 36);
 
@@ -187,6 +188,7 @@ public class LuckyThirdteen extends CardGame {
         ch.aplu.jcardgame.Hand hand = DECK.toHand(false);
         pack = new Hand(DECK);
         pack.insert(hand, true);
+        discard = new Hand(DECK);
 
         String initialShareKey = "shared.initialcards";
         String initialShareValue = properties.getProperty(initialShareKey);

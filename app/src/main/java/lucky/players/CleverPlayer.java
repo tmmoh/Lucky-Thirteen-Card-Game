@@ -9,13 +9,13 @@ public class CleverPlayer extends ComputerPlayer {
         super(game, moveString, startingCards);
     }
 
-    @Override
-    protected void logicPlayRound() {
-
-    }
 
     @Override
     protected void discardCard() {
+        // Discard Cards = game.discard;
+        // Shared Cards = game.playingArea;
+        // Hand = hand;
 
+        // Implemented discarding logic here
     }
 }

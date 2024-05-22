@@ -36,7 +36,7 @@ public abstract class ComputerPlayer extends Player {
         String move = moves.next();
         String[] actions = move.split("-");
         String drawString = actions[0];
-        game.pack.dealCardToHand(hand, drawString);
+        drawCard(drawString);
 
         GameGrid.delay(game.delayTime);
 

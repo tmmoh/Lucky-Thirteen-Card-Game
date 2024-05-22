@@ -33,5 +33,6 @@ public class HumanPlayer extends Player {
     @Override
     protected void discardCard() {
         selected.removeFromHand(true);
+        game.discard.insert(selected, true);
     }
 }

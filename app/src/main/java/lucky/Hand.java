@@ -53,7 +53,7 @@ public class Hand extends ch.aplu.jcardgame.Hand {
 
     }
 
-    public void discardRandomCard() {
+    public void discardRandomCard(Hand discard) {
         if (this.isEmpty()) {
             System.out.println("hand is empty: nothing to discard");
             return;
@@ -61,9 +61,10 @@ public class Hand extends ch.aplu.jcardgame.Hand {
 
         Card discarded = getRandomCard();
         discarded.removeFromHand(true);
+        discard.insert(discarded, true);
     }
 
-    public void discardCard(String cardString) {
+    public void discardCard(Hand discard, String cardString) {
         Card toDiscard = getCard(cardString);
 
         if (toDiscard != null) {
@@ -71,7 +72,7 @@ public class Hand extends ch.aplu.jcardgame.Hand {
         } else {
             System.out.println("cannot discard card: " + cardString + " - hand: " + this);
             System.out.println("discarding randomly instead");
-            discardRandomCard();
+            discardRandomCard(discard);
         }
     }
 
