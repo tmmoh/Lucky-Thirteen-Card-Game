@@ -19,4 +19,15 @@ public enum Suit {
     public int getMultiplicationFactor() {
         return multiplicationFactor;
     }
+
+    public static Suit fromString(String cardName) {
+        String suitString = cardName.substring(cardName.length() - 1, cardName.length());
+
+        for (Suit suit : Suit.values()) {
+            if (suit.getSuitShortHand().equals(suitString)) {
+                return suit;
+            }
+        }
+        return Suit.CLUBS;
+    }
 }

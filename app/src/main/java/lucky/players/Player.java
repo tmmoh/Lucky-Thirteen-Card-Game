@@ -2,7 +2,7 @@ package lucky.players;
 
 import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.Deck;
-import ch.aplu.jcardgame.Hand;
+import lucky.Hand;
 import lucky.LuckyThirdteen;
 
 import java.util.Arrays;
@@ -12,29 +12,39 @@ public abstract class Player {
     public final LuckyThirdteen game;
     public final Hand hand;
 
-    protected Player(LuckyThirdteen game, Card... startingCards) {
+    protected Player(LuckyThirdteen game, String startingCards) {
         this.game = game;
         this.hand = new Hand(LuckyThirdteen.DECK);
 
-        if (startingCards.length > 2)  {
-            throw new IllegalArgumentException();
+        // Parse starting cards
+        if (startingCards != null) {
+            String[] cards = startingCards.split(",");
+            for (String card: cards) {
+                if (card.length() < 2) {
+                    continue;
+                }
+                game.pack.dealCardToHand(hand, card);
+            }
         }
-        Arrays.stream(startingCards).forEach((c) -> hand.insert(c, false));
-        //while (hand.getNumberOfCards() < 2) {
-         //   hand.insert(game.drawRandom(), false);
-        //}
+
+        while (hand.getNumberOfCards() < 2) {
+            game.pack.dealRandomCardToHand(hand);
+        }
     }
 
-    public void playRound() {
+    public abstract void playRound();
 
+    protected void drawRandomCard() {
+        game.pack.dealRandomCardToHand(hand);
     }
 
-    protected Card drawCard() {
-        //game.drawRandom();
-        return null;
+    protected void drawCard(String cardString) {
+        game.pack.dealCardToHand(hand, cardString);
     }
 
-    protected void discard(Card card) {
-        card.removeFromHand(true);
+    protected void discardCard(String cardString) {
+        hand.discardCard(cardString);
     }
+
+    protected abstract void discardCard();
 }

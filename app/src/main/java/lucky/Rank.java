@@ -29,6 +29,19 @@ public enum Rank {
         return possibleSumValues;
     }
 
+    public static Rank fromString(String cardName) {
+        String rankString = cardName.substring(0, cardName.length() - 1);
+        Integer rankValue = Integer.parseInt(rankString);
+
+        for (Rank rank : Rank.values()) {
+            if (rank.getRankCardValue() == rankValue) {
+                return rank;
+            }
+        }
+
+        return Rank.ACE;
+    }
+
     public String getRankCardLog() {
         return String.format("%d", value);
     }
