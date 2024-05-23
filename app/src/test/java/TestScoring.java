@@ -8,7 +8,16 @@ import java.util.Scanner;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * TestScoring class contains JUnit tests for the Lucky Thirteen game.
+ * It includes tests to v alidate the scoring logic based on different game scenarios.
+*/
 public class TestScoring {
+    /**
+     * RoundData is an inner class that is used to store information about a specific round.
+     * It includes the round number, player selections, and player scores.
+     * 
+     */
     class RoundData {
         int roundNumber;
         String playerSelections;
@@ -21,6 +30,12 @@ public class TestScoring {
         }
     }
 
+    /**
+     * Converts a log line from the game into a RoundData object.
+     * 
+     * @param logLine       the log line to be parsed
+     * @return              RoundData object containing information, or null if the log line is not relevant
+     */
     private RoundData convertFromLogLine(String logLine) {
         if (!logLine.startsWith("Round")) {
             return null;
@@ -47,7 +62,12 @@ public class TestScoring {
         return roundData;
     }
 
-
+    /**
+     * Converts a log line from the game into an array of end game scores.
+     * 
+     * @param logLine       the log line to be parsed
+     * @return              an array of end game scores, or null if the log line is not returned.
+     */
     private int[] convertEndGameFromLogLine(String logLine) {
         if (!logLine.startsWith("EndGame:")) {
             return null;
@@ -64,6 +84,12 @@ public class TestScoring {
         return scores;
     }
 
+    /**
+     * Runs the game with the specified properties file and returns a Scanner for the game log output
+     * 
+     * @param propertiesFile    the properties file to configure the game
+     * @return                  Scanner for reading the game log output
+     */
     private Scanner runningGame(String propertiesFile) {
         final Properties properties = PropertiesLoader.loadPropertiesFile(propertiesFile);
         String logResult = new LuckyThirdteen(properties).runApp();
@@ -87,6 +113,9 @@ public class TestScoring {
         }
     }
 
+    /**
+     * Test case to verify the scoring when there is one winner in the original game config.
+     */
     @Test(timeout = 60000)
     public void test1WinnerExtension() {
         String testProperties = "properties/test2.properties";
@@ -101,6 +130,9 @@ public class TestScoring {
         }
     }
 
+    /**
+     * Test case to verify the scoring when there are multiple winners with scores in the original game config.
+     */
     @Test(timeout = 60000)
     public void test2WinnerOriginal() {
         String testProperties = "properties/test3.properties";
@@ -115,6 +147,9 @@ public class TestScoring {
         }
     }
 
+    /**
+     * Test case to verify the scoring when there are multiple winners with scores in the extended game config.
+     */
     @Test(timeout = 600000)
     public void test2WinnerExtension() {
         String testProperties = "properties/test4.properties";
@@ -129,6 +164,9 @@ public class TestScoring {
         }
     }
 
+    /**
+     * Test case to verify the scoring when no player achieves a sum of thirteen
+     */
     @Test(timeout = 600000)
     public void test0Winner() {
         String testProperties = "properties/test5.properties";
